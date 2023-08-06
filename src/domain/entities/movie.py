@@ -9,7 +9,7 @@ class Movie:
     id: UUID
     name: str
     release_date: datetime
-    description: str
     director: str
+    description: Optional[str]
     duration: Optional[int]
-    budged: Optional[int]
+    budget: Optional[int]

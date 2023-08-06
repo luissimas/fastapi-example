@@ -14,7 +14,7 @@ class MovieRepositoryCreateDTO:
     description: str
     director: str
     duration: Optional[int]
-    budged: Optional[int]
+    budget: Optional[int]
 
 
 @dataclass
@@ -24,7 +24,7 @@ class MovieRepositoryUpdateDTO:
     description: Optional[str]
     director: Optional[str]
     duration: Optional[int]
-    budged: Optional[int]
+    budget: Optional[int]
 
 
 class MovieRepository(ABC):
