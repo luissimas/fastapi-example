@@ -1,39 +1,23 @@
 from abc import ABC, abstractmethod
-from dataclasses import dataclass
-from datetime import datetime
 from typing import List, Optional
 from uuid import UUID
 
+from src.application.dtos import (
+    CreateMovieDTO,
+    PaginatedResult,
+    PaginationParameters,
+    UpdateMovieDTO,
+)
 from src.domain.entities.movie import Movie
-
-
-@dataclass
-class MovieRepositoryCreateDTO:
-    name: str
-    release_date: datetime
-    description: str
-    director: str
-    duration: Optional[int]
-    budget: Optional[int]
-
-
-@dataclass
-class MovieRepositoryUpdateDTO:
-    name: Optional[str]
-    release_date: Optional[datetime]
-    description: Optional[str]
-    director: Optional[str]
-    duration: Optional[int]
-    budget: Optional[int]
 
 
 class MovieRepository(ABC):
     @abstractmethod
-    def create(self, movie_data: MovieRepositoryCreateDTO) -> Movie:
+    def create(self, movie_data: CreateMovieDTO) -> Movie:
         raise NotImplementedError
 
     @abstractmethod
-    def list(self) -> List[Movie]:
+    def list(self, pagination_params: PaginationParameters) -> PaginatedResult[Movie]:
         raise NotImplementedError
 
     @abstractmethod
@@ -41,7 +25,7 @@ class MovieRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def update(self, id: UUID, movie_data: MovieRepositoryUpdateDTO) -> Optional[Movie]:
+    def update(self, id: UUID, movie_data: UpdateMovieDTO) -> Optional[Movie]:
         raise NotImplementedError
 
     @abstractmethod
