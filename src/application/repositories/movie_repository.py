@@ -21,11 +21,11 @@ class MovieRepository(ABC):
         raise NotImplementedError
 
     @abstractmethod
-    def get_by_id(self, id: UUID) -> Optional[Movie]:
+    def get_by_id(self, id: UUID) -> Movie:
         raise NotImplementedError
 
     @abstractmethod
-    def update(self, id: UUID, movie_data: UpdateMovieDTO) -> Optional[Movie]:
+    def update(self, id: UUID, movie_data: UpdateMovieDTO) -> Movie:
         raise NotImplementedError
 
     @abstractmethod
