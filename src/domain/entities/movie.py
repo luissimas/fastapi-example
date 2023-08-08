@@ -10,6 +10,6 @@ class Movie:
     name: str
     release_date: datetime
     director: str
-    description: Optional[str]
-    duration: Optional[int]
-    budget: Optional[int]
+    description: Optional[str] = None
+    duration: Optional[int] = None
+    budget: Optional[int] = None

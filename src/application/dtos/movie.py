@@ -9,14 +9,14 @@ class CreateMovieDTO(BaseModel):
     release_date: datetime
     description: str
     director: str
-    duration: Optional[int]
-    budget: Optional[int]
+    duration: Optional[int] = None
+    budget: Optional[int] = None
 
 
 class UpdateMovieDTO(BaseModel):
-    name: Optional[str]
-    release_date: Optional[datetime]
-    description: Optional[str]
-    director: Optional[str]
-    duration: Optional[int]
-    budget: Optional[int]
+    name: Optional[str] = None
+    release_date: Optional[datetime] = None
+    description: Optional[str] = None
+    director: Optional[str] = None
+    duration: Optional[int] = None
+    budget: Optional[int] = None

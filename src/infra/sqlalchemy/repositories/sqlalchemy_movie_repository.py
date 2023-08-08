@@ -11,7 +11,7 @@ from src.application.dtos import (
 )
 from src.application.repositories.movie_repository import MovieRepository
 from src.domain.entities.movie import Movie
-from src.domain.exceptions.not_found_exception import NotFoundException
+from src.domain.exceptions import NotFoundException
 from src.factories.database import make_db_session
 from src.infra.sqlalchemy.models import MovieModel
 from src.infra.sqlalchemy.repositories.utils import paginate_query
