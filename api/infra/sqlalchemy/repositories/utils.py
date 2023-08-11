@@ -1,6 +1,6 @@
 from sqlalchemy.orm import Query
 
-from src.application.dtos import PaginatedResult, PaginationParameters
+from api.application.dtos import PaginatedResult, PaginationParameters
 
 
 def paginate_query(

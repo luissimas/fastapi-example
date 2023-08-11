@@ -3,18 +3,18 @@ from uuid import UUID
 from fastapi import Depends
 from sqlalchemy.orm import Session
 
-from src.application.dtos import (
+from api.application.dtos import (
     CreateMovieDTO,
     PaginatedResult,
     PaginationParameters,
     UpdateMovieDTO,
 )
-from src.application.repositories.movie_repository import MovieRepository
-from src.domain.entities.movie import Movie
-from src.domain.exceptions import NotFoundException
-from src.factories.database import make_db_session
-from src.infra.sqlalchemy.models import MovieModel
-from src.infra.sqlalchemy.repositories.utils import paginate_query
+from api.application.repositories.movie_repository import MovieRepository
+from api.domain.entities.movie import Movie
+from api.domain.exceptions import NotFoundException
+from api.factories.database import make_db_session
+from api.infra.sqlalchemy.models import MovieModel
+from api.infra.sqlalchemy.repositories.utils import paginate_query
 
 
 class SqlAlchemyMovieRepository(MovieRepository):

@@ -2,7 +2,7 @@ from uuid import uuid4
 
 from sqlalchemy import Column, Date, Integer, String, Uuid
 
-from src.infra.sqlalchemy.models.base import Base
+from api.infra.sqlalchemy.models.base import Base
 
 
 class MovieModel(Base):

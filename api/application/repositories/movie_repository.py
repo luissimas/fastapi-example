@@ -2,13 +2,13 @@ from abc import ABC, abstractmethod
 from typing import List, Optional
 from uuid import UUID
 
-from src.application.dtos import (
+from api.application.dtos import (
     CreateMovieDTO,
     PaginatedResult,
     PaginationParameters,
     UpdateMovieDTO,
 )
-from src.domain.entities.movie import Movie
+from api.domain.entities.movie import Movie
 
 
 class MovieRepository(ABC):

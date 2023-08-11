@@ -2,15 +2,15 @@ from uuid import UUID
 
 from fastapi import Depends, FastAPI
 
-from src.application.dtos.movie import CreateMovieDTO, UpdateMovieDTO
-from src.application.dtos.pagination import PaginatedResult
-from src.application.repositories.movie_repository import MovieRepository
-from src.domain.entities.movie import Movie
-from src.domain.exceptions.not_found_exception import NotFoundException
-from src.infra.sqlalchemy.repositories.sqlalchemy_movie_repository import (
+from api.application.dtos.movie import CreateMovieDTO, UpdateMovieDTO
+from api.application.dtos.pagination import PaginatedResult
+from api.application.repositories.movie_repository import MovieRepository
+from api.domain.entities.movie import Movie
+from api.domain.exceptions.not_found_exception import NotFoundException
+from api.infra.sqlalchemy.repositories.sqlalchemy_movie_repository import (
     SqlAlchemyMovieRepository,
 )
-from src.routes.utils import PaginationQueryParams
+from api.routes.utils import PaginationQueryParams
 
 app = FastAPI()
 

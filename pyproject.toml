@@ -1,5 +1,5 @@
 [tool.poetry]
-name = "rotina-compartilhamento-fastapi"
+name = "api"
 version = "0.1.0"
 description = ""
 authors = ["Luís Simas"]
@@ -27,8 +27,8 @@ requires = ["poetry-core"]
 build-backend = "poetry.core.masonry.api"
 
 [tool.poetry.scripts]
-start = "src:run"
-dev = "src:dev"
+start = "api:run"
+dev = "api:dev"
 
 [tool.taskipy.tasks]
 test = "pytest"
@@ -37,4 +37,4 @@ test = "pytest"
 profile = "black"
 
 [tool.pytest.ini_options]
-pythonpath = [".", "src"]
+pythonpath = [".", "api"]
