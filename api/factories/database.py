@@ -8,9 +8,4 @@ sessionmaker = sessionmaker(bind=engine, expire_on_commit=False)
 
 
 def make_db_session():
-    session = scoped_session(sessionmaker)
-
-    try:
-        yield session
-    finally:
-        session.close()
+    return sessionmaker

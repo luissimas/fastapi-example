@@ -1,7 +1,8 @@
 from uuid import UUID
 
 from fastapi import Depends
-from sqlalchemy.orm import Session
+from sqlalchemy import Engine
+from sqlalchemy.orm import Session, sessionmaker
 
 from api.application.dtos import (
     CreateMovieDTO,
@@ -18,50 +19,57 @@ from api.infra.sqlalchemy.repositories.utils import paginate_query
 
 
 class SqlAlchemyMovieRepository(MovieRepository):
-    def __init__(self, session: Session = Depends(make_db_session)):
+    def __init__(self, session: sessionmaker = Depends(make_db_session)):
         self.session = session
 
     def create(self, movie_data: CreateMovieDTO) -> Movie:
         movie = MovieModel(**movie_data.__dict__)
 
-        self.session.add(movie)
-        self.session.commit()
-        self.session.refresh(movie)
+        with self.session() as session:
+            session.add(movie)
+            session.commit()
+            session.refresh(movie)
 
         return self.__model_to_entity(movie)
 
     def list(self, pagination_params: PaginationParameters) -> PaginatedResult[Movie]:
-        query = self.session.query(MovieModel)
-        result = paginate_query(query, pagination_params)
+        with self.session() as session:
+            query = session.query(MovieModel)
+            result = paginate_query(query, pagination_params)
+
         return PaginatedResult(
             total=result.total,
             result=[self.__model_to_entity(model) for model in result.result],
         )
 
     def get_by_id(self, id: UUID) -> Movie:
-        movie_model = self.__get_by_id(id)
+        with self.session() as session:
+            movie_model = self.__get_by_id(id, session)
+
         return self.__model_to_entity(movie_model)
 
     def update(self, id: UUID, movie_data: UpdateMovieDTO) -> Movie:
-        movie = self.__get_by_id(id)
+        with self.session() as session:
+            movie = self.__get_by_id(id, session)
 
-        for attr, value in movie_data.dict().items():
-            if value is not None:
-                setattr(movie, attr, value)
+            for attr, value in movie_data.dict().items():
+                if value is not None:
+                    setattr(movie, attr, value)
 
-        self.session.commit()
-        self.session.refresh(movie)
+            session.commit()
+            session.refresh(movie)
 
         return self.__model_to_entity(movie)
 
     def delete(self, id: UUID) -> None:
-        movie = self.__get_by_id(id)
+        with self.session() as session:
+            movie = self.__get_by_id(id, session)
 
-        self.session.delete(movie)
-        self.session.commit()
+            session.delete(movie)
+            session.commit()
 
-    def __get_by_id(self, id: UUID) -> MovieModel:
-        movie = self.session.get(MovieModel, id)
+    def __get_by_id(self, id: UUID, session: Session) -> MovieModel:
+        movie = session.get(MovieModel, id)
 
         if movie:
             return movie
