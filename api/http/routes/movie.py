@@ -1,3 +1,4 @@
+from http import HTTPStatus
 from uuid import UUID
 
 from fastapi import APIRouter, Depends
@@ -6,15 +7,15 @@ from api.application.dtos.movie import CreateMovieDTO, UpdateMovieDTO
 from api.application.dtos.pagination import PaginatedResult
 from api.application.repositories.movie_repository import MovieRepository
 from api.domain.entities.movie import Movie
+from api.http.utils import PaginationQueryParams
 from api.infra.sqlalchemy.repositories.sqlalchemy_movie_repository import (
     SqlAlchemyMovieRepository,
 )
-from api.routes.utils import PaginationQueryParams
 
 router = APIRouter()
 
 
-@router.post("")
+@router.post("", status_code=HTTPStatus.CREATED)
 def create_movie(
     data: CreateMovieDTO,
     movie_repository: MovieRepository = Depends(SqlAlchemyMovieRepository),
@@ -47,7 +48,7 @@ def update_movie(
     return movie_repository.update(movie_id, movie_data)
 
 
-@router.delete("/{movie_id}")
+@router.delete("/{movie_id}", status_code=HTTPStatus.NO_CONTENT)
 def delete_movie(
     movie_id: UUID,
     movie_repository: MovieRepository = Depends(SqlAlchemyMovieRepository),

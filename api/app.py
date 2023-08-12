@@ -1,9 +1,13 @@
 from fastapi import FastAPI
 from fastapi.openapi.utils import get_openapi
 
-from api.routes import movie_router
+from api.domain.exceptions import NotFoundException
+from api.http.exception_handlers import not_found_exception_handler
+from api.http.routes import movie_router
 
 app = FastAPI()
+
+app.add_exception_handler(NotFoundException, not_found_exception_handler)
 
 app.include_router(movie_router, prefix="/movie", tags=["Movies"])
 
