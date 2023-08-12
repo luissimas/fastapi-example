@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from datetime import datetime
+from datetime import date
 from typing import Optional
 from uuid import UUID
 
@@ -8,7 +8,7 @@ from uuid import UUID
 class Movie:
     id: UUID
     name: str
-    release_date: datetime
+    release_date: date
     director: str
     description: Optional[str] = None
     duration: Optional[int] = None
