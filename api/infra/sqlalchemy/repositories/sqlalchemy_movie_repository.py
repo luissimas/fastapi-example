@@ -1,7 +1,5 @@
 from uuid import UUID
 
-from fastapi import Depends
-from sqlalchemy import Engine
 from sqlalchemy.orm import Session, sessionmaker
 
 from api.application.dtos import (
@@ -13,13 +11,12 @@ from api.application.dtos import (
 from api.application.repositories.movie_repository import MovieRepository
 from api.domain.entities.movie import Movie
 from api.domain.exceptions import NotFoundException
-from api.factories.database import make_db_session
 from api.infra.sqlalchemy.models import MovieModel
 from api.infra.sqlalchemy.repositories.utils import paginate_query
 
 
 class SqlAlchemyMovieRepository(MovieRepository):
-    def __init__(self, session: sessionmaker = Depends(make_db_session)):
+    def __init__(self, session: sessionmaker):
         self.session = session
 
     def create(self, movie_data: CreateMovieDTO) -> Movie:
