@@ -1,0 +1,53 @@
+#+title:APIs em Python com FastAPI
+
+O código disponível neste repositório é um exemplo de uma aplicação simples desenvolvida utilizando [[https://fastapi.tiangolo.com/][FastAPI]] com o objetivo de ilustrar as principais funcionalidades do Framework. A API inclui validação de rotas, documentação e persistência de dados.
+
+Para buildar e executar os containers da aplicação:
+
+#+begin_src sh
+docker compose build
+docker compose up
+#+end_src
+
+Após iniciar a aplicação, é possível acessar a documentação em: [[http://localhost:3000/docs]]
+
+* O estado de frameworks web em Python
+Python é uma linguagem bastante madura e que tem um ecossistema bastante rico para diversas aplicações, inclusive aplicações Web. Atualmente os três mais populares são, em ordem:
+
+1. Django: o framework mais popular, tem uma abordagem de prover uma solução completa, contando com módulos de roteamento, documentação, autenticação e até mesmo um o próprio ORM.
+2. Flask: um framework bastante minimalista, comparável ao Express.js, fornecendo as ferramentas básicas de roteamento e tratamento de requisições e respostas. Pela natureza minimalista e modular, o ecossistema do Flask conta com várias ferramentas em forma de pacotes auxiliares, sendo possível integrar funcionalidades extras ao framework.
+3. FastAPI: um framework relativamente novo, se propondo a utilizar as funcionalidades mais modernas do Python para entregar uma performance e experiência de desenvolvimento. O FastAPI se insere em um meio termo entre os dois anteriores. Seu core é bastante minimalista como o Flask, porém ele conta com uma série de ferramentas /built-in/ para lidar com tarefas comuns em aplicações web, como validação, documentação, fluxos de autenticação OAuth etc.
+* Introdução ao FastAPI
+O FastAPI se propõe a utilizar features modernas do Python, como /asyncio/ e /type annotations/ para fornecer não só uma melhor performance, mas também uma melhor experiência de desenvolvimento. O framework traz bastante ferramentas que fazem com que ele definitivamente não seja um framework minimalista (como o Flask ou Express), mas ao mesmo tempo ele não impõe nenhuma arquitetura (como o Nest.js) e nem faz com que o uso dessas ferramentas built-in seja "obrigatório" (como o Django ou Adonis). Na prática isso trouxe um balanço interessante entre produtividade e flexibilidade.
+
+A título de exemplo, podemos definir uma API simples, contando com validação e documentação, da seguinte forma:
+
+#+begin_src python
+from typing import List
+from uuid import UUID, uuid4
+
+import uvicorn
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+app = FastAPI()
+
+
+class Item(BaseModel):
+    id: UUID
+    name: str
+    price: float
+
+
+@app.get("/item")
+async def get_items() -> List[Item]:
+    return [Item(id=uuid4(), name="first_item", price=42.34)]
+
+
+@app.post("/item")
+async def create_item(item: Item) -> Item:
+    return item
+
+
+uvicorn.run(app, port=3000)
+#+end_src

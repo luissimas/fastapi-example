@@ -7,8 +7,8 @@ from pydantic import BaseModel
 class CreateMovieDTO(BaseModel):
     name: str
     release_date: date
-    description: str
     director: str
+    description: Optional[str] = None
     duration: Optional[int] = None
     budget: Optional[int] = None
 
